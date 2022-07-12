@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authorization is necessary!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <input type="hidden" id="formName" value="login"/>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row align-items-start">
+        <div class="col-md-3 p-2">
+            <form class="form-group">
+                <span th:text="#{lang.change}"></span>:
+                <select class="form-select" id="locales" name="lang" onchange="submit()">
+                    <option value=""></option>
+                    <option value="en" th:text="#{lang.eng}"></option>
+                    <option value="ru" th:text="#{lang.ru}"></option>
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col p-5">
+            <form class="form-signin" id="login-form" th:action="@{/login}" method="post">
+                <div class="text-danger" th:if="${param.error}">
+                    <span th:text="#{param.error}"></span>
+                </div>
+                <div class="text-info" th:if="${param.logout}">
+                    <span th:text="#{param.logout}"></span>
+                </div>
+                <h1 class="h3 mb-3 font-weight-normal"><span th:text="#{converter.name}"></span></h1>
+                <div><input class="form-control" type="text" th:attr="placeholder=#{login}" name="username" required autofocus/> </div>
+                <div><input class="form-control" type="password" th:attr="placeholder=#{password}" name="password" required/> </div>
+                <div><input class="btn btn-lg btn-primary btn-block" type="submit" id="btn-sub" th:attr="value=#{enter}"/></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="webjars/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>
