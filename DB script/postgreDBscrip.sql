@@ -1,12 +1,8 @@
-DROP DATABASE currency_converter;
-CREATE DATABASE currency_converter
-    WITH 
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'Russian_Ukraine.1251'
-    LC_CTYPE = 'Russian_Ukraine.1251';
+CREATE ROLE demo_user WITH LOGIN NOSUPERUSER INHERIT CREATEDB NOCREATEROLE REPLICATION CONNECTION LIMIT -1 PASSWORD 'demo_pass';
 
-DROP TABLE convert_operation;
+DROP DATABASE currency_converter;
+CREATE DATABASE currency_converter WITH OWNER = demo_user ENCODING = 'UTF8' CONNECTION LIMIT = -1;
+
 CREATE TABLE convert_operation
 (
     id bigint NOT NULL,
@@ -18,10 +14,7 @@ CREATE TABLE convert_operation
     source_sum double precision,
     CONSTRAINT convert_operation_pkey PRIMARY KEY (id)
 );
-ALTER TABLE convert_operation OWNER to postgres;
 	
-
-DROP TABLE currency;
 CREATE TABLE currency
 (
     id character varying(255) COLLATE pg_catalog."default" NOT NULL,
@@ -29,10 +22,7 @@ CREATE TABLE currency
     name character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT currency_pkey PRIMARY KEY (id)
 );
-ALTER TABLE currency OWNER to postgres;
 
-
-DROP TABLE currency_rate;
 CREATE TABLE currency_rate
 (
     id character varying(255) COLLATE pg_catalog."default" NOT NULL,
@@ -41,4 +31,3 @@ CREATE TABLE currency_rate
     rate double precision,
     CONSTRAINT currency_rate_pkey PRIMARY KEY (id)
 );
-ALTER TABLE currency_rate OWNER to postgres;
